@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Список книг</h1>
+{% for book in books %}
+    <p>Название: {{ book.title }}</p>
+    <p>Автор: {{ book.author.name }}</p>
+    <p>Страниц: {{ book.pages }}</p>
+{% endfor %}
+</body>
+</html>
