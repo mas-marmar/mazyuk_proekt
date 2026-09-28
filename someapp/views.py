@@ -80,6 +80,7 @@ class TaskDetailView(View):
         task = get_object_or_404(Task, pk=pk)
         raw_json = request.body
         new_data = loads(raw_json)
+
         merged_data = model_to_dict(task)
         merged_data.update(new_data)
 
@@ -103,6 +104,11 @@ class TaskDetailView(View):
                 {'status': 'error', 'errors': form.errors, 'code': 400},
                 status=400
             )
+
+    def delete(self, request, pk): #DELETE /tasks/1
+        task = get_object_or_404(Task, pk=pk)
+        task.delete()
+        return JsonResponse({'status': 'success', 'message': 'Задача удалена'})
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -181,6 +187,11 @@ class TagDetailView(View):
                 status=400
             )
 
+    def delete(self, request, pk): #DELETE /tags/1
+        tag = get_object_or_404(Tag, pk=pk)
+        tag.delete()
+        return JsonResponse({'status': 'success', 'message': 'Тег удален'}, status=204)
+
 
 @method_decorator(csrf_exempt, name='dispatch')
 class TaskTagView(View):
@@ -199,6 +210,14 @@ class TaskTagView(View):
         if created:
             return JsonResponse({'status': 'success', 'message': 'Тег добавлен к задаче'}, status=201)
         return JsonResponse({'status': 'error', 'message': 'Тег уже привязан', 'code': 400}, status=400)
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class TaskTagDeleteView(View):
+    def delete(self, request, task_id, tag_id): #DELETE /tasks/{id_задачи}/tags/{id_тега}
+        task_tag = get_object_or_404(TaskTag, task_id=task_id, tag_id=tag_id)
+        task_tag.delete()
+        return JsonResponse({'status': 'success', 'message': 'Тег удален от задачи'}, status=204)
 
 
 @method_decorator(csrf_exempt, name='dispatch')

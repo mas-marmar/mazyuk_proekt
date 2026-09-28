@@ -1,8 +1,8 @@
 from django.urls import path
 from .views import (
-    TaskListView, TaskDetailView, 
-    TagListView, TagDetailView, 
-    TaskTagView, TaskByTagView
+    TaskListView, TaskDetailView,
+    TagListView, TagDetailView,
+    TaskTagView, TaskTagDeleteView, TaskByTagView
 )
 
 urlpatterns = [
@@ -11,5 +11,6 @@ urlpatterns = [
     path('tags/', TagListView.as_view()),
     path('tags/<int:pk>/', TagDetailView.as_view()),
     path('tasks/<int:task_id>/tags/', TaskTagView.as_view()),
+    path('tasks/<int:task_id>/tags/<int:tag_id>/', TaskTagDeleteView.as_view()),
     path('tags/<int:tag_id>/tasks/', TaskByTagView.as_view()),
 ]
