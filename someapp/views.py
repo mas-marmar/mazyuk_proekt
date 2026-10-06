@@ -190,7 +190,7 @@ class TagDetailView(View):
     def delete(self, request, pk): #DELETE /tags/1
         tag = get_object_or_404(Tag, pk=pk)
         tag.delete()
-        return JsonResponse({'status': 'success', 'message': 'Тег удален'}, status=204)
+        return JsonResponse({'status': 'success', 'message': 'Тег удален'})
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -217,7 +217,7 @@ class TaskTagDeleteView(View):
     def delete(self, request, task_id, tag_id): #DELETE /tasks/{id_задачи}/tags/{id_тега}
         task_tag = get_object_or_404(TaskTag, task_id=task_id, tag_id=tag_id)
         task_tag.delete()
-        return JsonResponse({'status': 'success', 'message': 'Тег удален от задачи'}, status=204)
+        return JsonResponse({'status': 'success', 'message': 'Тег удален от задачи'})
 
 
 @method_decorator(csrf_exempt, name='dispatch')
